@@ -192,6 +192,29 @@ def station_stats(df):
     print("This took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
+def format_duration(seconds):
+    # A dictionary to store time units and their equivalents in seconds.
+    units = {
+        'year': 365*24*60*60,
+        'month': (365/12)*24*60*60,
+        'week': 7*24*60*60,
+        'day': 24*60*60,
+        'hour': 60*60,
+        'minute': 60
+    }
+
+    # A list to store the breakdown of the time duration in various units.
+    result = []
+    for unit, unit_seconds in units.items():
+        # Using divmod to get the quotient and remainder for each time unit.
+        value, seconds = divmod(seconds, unit_seconds)
+        if value:
+            # Appending the non-zero time units to the result list.
+            result.append(f'{int(value)} {unit}{"s" if value > 1 else ""}')
+
+        # Adding seconds to the result list.
+        result.append(f'{int(seconds)} second{"s" if seconds > 1 else ""}')
+        return ', '.join(result)
 
 def trip_duration_stats(df):
     """
