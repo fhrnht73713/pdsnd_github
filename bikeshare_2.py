@@ -360,7 +360,7 @@ def main():
         station_stats(df)
         trip_duration_stats(df)
         user_stats(df)
-        data_scroller (df)
+        data_scroller(df)
 
         restart = input('\nWould you like to restart? Enter yes or no:\n')
         print()
