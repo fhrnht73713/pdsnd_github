@@ -192,6 +192,7 @@ def station_stats(df):
     print("This took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
+
 def format_duration(seconds):
     # A dictionary to store time units and their equivalents in seconds.
     units = {
@@ -213,8 +214,9 @@ def format_duration(seconds):
             result.append(f'{int(value)} {unit}{"s" if value > 1 else ""}')
 
         # Adding seconds to the result list.
-        result.append(f'{int(seconds)} second{"s" if seconds > 1 else ""}')
-        return ', '.join(result)
+    result.append(f'{int(seconds)} second{"s" if seconds > 1 else ""}')
+    return ', '.join(result)
+
 
 def trip_duration_stats(df):
     """
@@ -226,52 +228,18 @@ def trip_duration_stats(df):
         Does not return any variables.
     """
     # Displays statistics on the total and average trip duration.
-
-    # Breakdown of number of seconds in each unit of time. This is provided for transparency (specifically with regard to handling the varying number of days in a month).
-    minute = 60
-    hour = (60 * minute)
-    day = (24 * hour)
-    week = (7 * day)
-    month = ((365 / 12) * day)
-    year = (365 * day)
-
     print('\nCalculating Trip Duration...\n')
     start_time = time.time()
 
     # Display breakdown of total travel time (note for future development: There might be a better way to do this.)
     total_time = df['Trip Duration'].sum()
-
-    years = total_time // year
-    seconds_remainder = total_time % year
-
-    months = seconds_remainder // month
-    seconds_remainder %= month
-
-    weeks = seconds_remainder // week
-    seconds_remainder %= week
-    
-    days = seconds_remainder // day
-    seconds_remainder %= day
-
-    hours = seconds_remainder // hour
-    seconds_remainder %= hour
-
-    minutes = seconds_remainder // minute
-    seconds_remainder %= minute
-
-    seconds = seconds_remainder
-    
     print(f'The total duration of all trips for the selected city and timeframe is {total_time} seconds. ')
-    print(f'-------> This equates to {years} years, {months} months, {weeks} weeks, {days} days, {hours} hours, {minutes} minutes and {seconds} seconds. \n')
+    print(f'-------> This equates to {format_duration(total_time)}. \n')
 
     # display mean travel time
     mean_time = df['Trip Duration'].mean()
-
-    mean_mins = mean_time // minute
-    mean_seconds_remainder = np.floor(mean_time % minute)
-
-    print(f'The mean travel time for all trips for the selected city and timeframe is {mean_time} seconds. ')
-    print(f'-------> This equates to roughly {mean_mins} minutes and {mean_seconds_remainder} seconds. \n')
+    print(f'The mean travel time for all trips for the selected city and timeframe is {mean_time:.2f} seconds. ')
+    print(f'-------> This equates to roughly {format_duration(mean_time)}. \n')
 
     print("This took %s seconds." % (time.time() - start_time))
     print('-'*40)
