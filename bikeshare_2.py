@@ -215,7 +215,7 @@ def trip_duration_stats(df):
     print('\nCalculating Trip Duration...\n')
     start_time = time.time()
 
-    # Display breakdown of total travel time (note for future development: there may be a more elegant way to do this...)
+    # Display breakdown of total travel time (note for future development: There might be a better way to do this.)
     total_time = df['Trip Duration'].sum()
 
     years = total_time // year
